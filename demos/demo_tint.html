@@ -1,0 +1,273 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Hue-Wheel image colorizing / tint demo</title>
+
+    <style>
+		html {
+			-ms-touch-action:none; /* necessary for touch in IE10/11 to work properly */
+			}
+		html, body {
+			width:100%;
+			}
+		body {
+			background:#272727;
+			font:14px sans-serif;
+			margin:0;
+			}
+		h1	{
+			color:#aaa;
+			font:40px sans-serif;
+			margin:60px 0 30px 0;
+			}
+		p	{
+			font:12px sans-serif;
+			color:#ca7;
+			}
+		#header {
+			position:relative;
+			width:1000px;
+			margin:0 auto;
+			}
+		#container {
+			position:relative;
+			width:1015px;
+			margin:0 auto;
+			}
+		#footer {
+			position:relative;
+			top:340px;
+			width:1000px;
+			margin:10px auto 10px auto;
+			font:14px sans-serif;
+			color:#999;
+			}
+		#footer > a {
+			color:#aaa;
+			}
+		#footer > a:hover,
+		#footer > span:hover {
+			color:#ddd;
+			}
+		#footer > span {
+			position:absolute;
+			right:0;
+			color:#aaa;
+			text-decoration:underline;
+			cursor:pointer;
+			}
+		#footer > p {
+			position:relative;
+			visibility:hidden;
+			left:0;
+			color:#fff;
+			text-decoration:underline;
+			cursor:pointer;
+			font-size:14px;
+			}
+		#original {
+			position:absolute;
+			left:0;
+			top:0;
+			z-index:-1;
+			background:#eee;
+			width:500px;
+			height:300px;
+			border-top:7px solid black;
+			border-left:7px solid black;
+			border-bottom:7px solid black;
+			}
+		#tinted {
+			position:absolute;
+			left:508px;
+			top:0;
+			z-index:-1;
+			background:#aaa;
+			width:500px;
+			height:300px;
+			border-top:7px solid black;
+			border-right:7px solid black;
+			border-bottom:7px solid black;
+			}
+		#wheel {
+			position:absolute;
+			left:357px;
+			top:7px;
+			width:300px;
+			z-index:1;
+			}
+	</style>
+
+    <script src="../huewheel.min.js"></script>
+    <script src="easyCanvas.1.2.min.js"></script>
+    <script src="fastHSL2RGB.0.1.min.js"></script>
+</head>
+<body>
+
+	<div id="header">
+		<h1>Hue-Wheel live colorize / tint demo</h1>
+    </div>
+
+	<div id="container">
+
+		<canvas id="original" width=500 height=300></canvas>
+		<canvas id="tinted" width=500 height=300></canvas>
+
+		<div id="wheel"></div>
+    </div>
+
+	<div id="footer">
+        <p id="option">Or click here to load default image</p>
+		<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIQAAAAWBAMAAADzxCncAAAALVBMVEUAAAB1d3l1d3l1d3l1d3l1d3l1d3l1d3l1d3l1d3l1d3l1d3l1d3l1d3l1d3lAHhJGAAAADnRSTlMAQIC/EDDUW++fIHCPr6s+es0AAAG1SURBVDjL3ZOxSsNQFIb/9LaGVodEBMGh2Ls4CBKJ6KKiouIY1MFJlHRwkuIDuGitk1QfoJROTtL6BE5O4iOUNoXa0jbP4DnXFmywi3HywLnJfw/n4/7nJvB9v0I5SYnfBSNSYRD6amjExE1oRMQNjYATHgFIKQ8pd6ScB6ImxdQmr8WYg30p54pKmV975gYotJkYK4NVwgTofZuSm6noU9STahVW3Hftuw+lfLXO+hYjFjzBqnaZBo5ygUvV6qBIGkCsK6zjFyDqApEa7c1ypeWBSi1PKJTeLMZunZEINISlnm/fEd46dYzl+ghcZo+yCCI67FG1toX1tGiaM+gj7qmy4T2eAO8VT5yScqC36BBBhPKYfJDytSOsCKtcH8HvhjfehdbT1Cx4Lus94Gcjrm2vlemwNPjpsyEjqBq719rASLxdyGP0LCCsA4fHP4zYS1czA0T0PB9vY+hSg4hkGUB1GKE32xggdqm/kA98WlrTtu2VAWKsYdvLvT7CpUrGo540I65ILZ3n2UvASEJSpEpFdeuZ6AWpDIHpBCWuGClgy0EipbOamwfF81/8I/8KUQmH+ATT7TLyTKIr7AAAAABJRU5ErkJggg==">
+        <span id="saveResult">Save tinted image</span>
+    </div>
+
+<script>
+
+/*
+ *	Setup canvases using easyCanvas (takes care of drop etc.)
+*/
+var ez1 = new easyCanvas('original'),
+	ez2 = new easyCanvas('tinted'),
+	ctx = ez1.ctx,
+
+	wheel = document.getElementById('wheel'),
+	option = document.getElementById('option'),
+
+	/*
+	 *	Setup a Hue-Wheel control
+	*/
+	hw = new HueWheel('wheel', {
+		onChange: update,
+		diameter: 300,
+		shadowBlur: 12,
+		colorSpace: 'hsl',
+		hue: 135,
+		changeSaturation: true,
+		changeLightness: false,
+		showColorSpot: false,
+		thicknessHue: 25,
+		hueKnobSize: 0.17,
+		hueKnobShadow: true,
+		tabable: false          // disabled for "estetics"/demo
+	}),
+
+	/*
+	 *	Use Faaast HSL2RGB converter for live preview.
+	*/
+	conv = new FastHSL2RGB(false, true),
+	hasImage = false,
+
+	/*
+	 *	Create some buffers to hold luma and destination buffer
+	*/
+	lumas		= new Float32Array(ez1.width * ez1.height),
+	ddata		= ez2.ctx.createImageData(ez2.width, ez2.height),
+	data		= new Uint32Array(ddata.data.buffer),
+	i			= data.length,
+
+	/*
+	 *	A default image (easy for pad/phone users)
+	*/
+	img			= new Image;
+
+// load image
+img.crossOrigin = '';
+img.onload = addOption;
+img.src = 'http://i.imgur.com/j5XTaoH.jpg';
+
+option.addEventListener('click', showImage, false);
+document.getElementById('saveResult').addEventListener('click', saveImage, false);
+
+// transparent until image is loaded
+wheel.style.opacity = 0.5;
+
+// Write info text on left canvas
+ctx.textAlign = 'center';
+ctx.textBaseline = 'middle';
+ctx.font = '24px sans-serif';
+ctx.fillStyle = '#777';
+ctx.fillText('Drop an image here', ez1.width * 0.5, ez1.height * 0.5);
+
+// fill buffer with alpha set
+while(i--) data[i] = 0xffffffff;
+
+// handle image drop
+ez1.ondrop = ez2.ondrop = onDrop;
+
+// enable drag and drop mode on canvases
+ez1.drop(true);
+ez2.drop(true);
+
+// update image with current hue and saturation
+function update() {
+
+	if (!hw || !hasImage) return;
+
+	var data = ddata.data,
+		len = data.length,
+		i = 0,
+		cnt = 0,
+
+		hsl = hw.hsl(),
+		h = hsl.h,
+		s = hsl.s;
+
+	for(; i < len; i += 8) {
+
+		var	c1 = conv.hsl2rgb(h, s, lumas[cnt++]),
+			c2 = conv.hsl2rgb(h, s, lumas[cnt++]);
+
+		data[i  ] = c1.r;
+		data[i+1] = c1.g;
+		data[i+2] = c1.b;
+
+		data[i+4] = c2.r;
+		data[i+5] = c2.g;
+		data[i+6] = c2.b;
+	}
+
+	ez2.ctx.putImageData(ddata, 0, 0);
+}
+
+function onDrop(e) {
+
+	if (e.images[0] !== null) {
+		hasImage = true;
+		wheel.style.opacity = 1;
+
+		ez1.drawImageProp(e.images[0], 0, 0, ez1.width, ez1.height);
+
+		// convert to gray-scale
+		var idata = ctx.getImageData(0, 0, ez1.width, ez1.height),
+			data = idata.data,
+			len = data.length,
+			i = 0,
+			cnt = 0;
+
+		for(; i < len; i += 4)
+			lumas[cnt++] = (data[i] * 0.2126 + data[i+1] * 0.7152 + data[i+2] * 0.0722) / 255;
+
+		update();
+	}
+}
+
+// save converted image
+function saveImage() {
+	if (hasImage)
+		ez2.download('Hue-Wheel tinted image.png');
+}
+
+function addOption() {
+	option.style.visibility = 'visible';
+}
+
+function showImage() {
+	onDrop({images: [img]});
+}
+
+</script>
+</body>
+</html>

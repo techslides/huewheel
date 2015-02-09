@@ -1,0 +1,49 @@
+CHANGE LOG
+==========
+
+1.1
+
+CHG: Instance object name changed from "hueWheel" to "HueWheel" to follow common convention (hueWheel is still available for now but please update your code)
+ADD: New event property (isTouch)
+FIX: Touch events in IE (with CSS work-around, ref. readme)
+IMP: JSDoc compatible
+REM: isArray shim removed (requires IE9 or higher)
+
+1.0
+
+ADD: tabable option to enable/disable using tab to activate control
+CHG: Smaller improvements, copyright updated
+TDO: Convert comment documentation into JSDoc compatible format
+
+0.5 RC
+
+TSK: HSV now sets as intended
+
+0.4 BETA
+
+CHG: Cleaned up code base
+FIX: thicknessLuma was never assigned in config
+FIX: rgb was never assigned in config
+
+0.3 ALPHA
+
+ADD: Hotkey support (page up/down, cursor keys + shift modifier)
+ADD: Options to set deltas and multiplier, as well as key codes for hotkeys
+ADD: More options for appearance incl. shadow for hue knob.
+ADD: More optimizations and internal re-factoring
+CHG: Some option names has been changed
+FIX: Killed mouse event too early preventing select element to work properly.
+
+0.2 ALPHA
+
+ADD: Support touch events
+ADD: tabIndex for control
+ADD: Better event dispatching (reduced queue)
+ADD: Option for hue knob width
+ADD: Options for knob colors
+ADD: More optimizations (per-centage/float)
+FIX: Hue knob rotated opposite direction in older Chrome versions
+
+0.1 ALPHA
+
+NEW: Initial release

@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Hue-Wheel demo</title>
+
+    <style>
+		html {
+			-ms-touch-action: none;
+			}
+		html, body {
+			width:100%;
+			margin:0;
+			}
+		body {
+			background:#bbb;
+			font:14px sans-serif;
+			}
+		#container {
+			width:300px;
+			margin:25px auto 0 auto;
+			}
+		#options {
+			margin-left:20px;
+			}
+		#info {
+			display:inline-block;
+			margin-bottom:12px;
+			}
+		#spot {
+			display:inline-block;
+			width:16px;
+			height:9px;
+			margin-right:7px;
+			border:1px solid #000;
+			}
+	    .logo {
+		    width:100%;
+		    box-sizing:border-box;
+		    text-align: center;
+		    }
+	</style>
+
+    <script src="../huewheel.min.js"></script>
+</head>
+<body>
+
+	<div id="container">
+
+        <div id="huewheel"></div>
+        <br>
+
+        <div id="spot"></div>
+        <div id="info"></div>
+        <br>
+
+        <div id="options">
+
+            <input id="CHANGEL" type="checkbox" checked> <label for="CHANGEL">Change lightness</label><br>
+            <input id="CHANGES" type="checkbox" checked> <label for="CHANGES">Change saturation</label><br>
+            <input id="SHOWCOLOR" type="checkbox" checked> <label for="SHOWCOLOR">Show color spot</label><br>
+            <input id="CLICKRING" type="checkbox"> <label for="CLICKRING">Clickable lightness ring</label><br>
+
+			<p><label for="CSPC">Color space</label>
+                <select id="CSPC">
+                    <option value="hsl" selected>HSL</option>
+                    <option value="hsv">HSV</option>
+                </select>
+            </p>
+
+        </div>
+
+		<hr>
+		<p class="logo">
+			<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIQAAAAWCAMAAAA2NMTdAAAAhFBMVEUAAAA4SZ44SZ44SZ6AZEw3S584SZ44SZ44SZ44SZ44SZ44SZ4jerSWRV43fo/ULyqxszv1fzFovUX+vzI4SZ6weEY4SZ44SZ44SZ43fo+WRV71fzGxszs4SZ7BkjY3fo9ovUX+vzI4SZ4jerTULypovUX+vzI3fo+WRV6xszv1fzGAZEzOcUV7AAAAInRSTlMAEJ/PQDDvQIC/YCB/QEB/QECAgI8QcK/fgICAgFAwEHBw8/jPYwAAAcJJREFUSMftk9tS4zAMhuW4diyHhQVy2kPKrva8vP/7Ef21YwJTOr0hXPBNZyxZPnwdK/QbfL/+D66vfgJ6VZLE7XYSE7fbS7Tebi8RRt5egtwb6AnlFuy7L6DbXwGUTJ0xJWxmdaf+AcQGyzKP180ZLeiEW4ql1swJ0UfQdTtA3Qdw2CiZGmGKiZmoErHM7EViLYUSBxJhygSdYMlQFAsL5/00D//A19092H3+C5KEWq5DJy0xYwBm5HRLWhcoI35JHGIuUmrRwMHR+RIkrIeVvG2PSgQWR8D6mCWKhXdwOCnR1wceS1R6WCO8tMhaosrdMUs03h5EpVc7tqnmkgUcTkpk9PCgtKP0+EdBEj6uJTL1LEG9tJgcCBICUq9oOuh4xnNYBkNPkKDU65P1x5+DaJCazOiNFrCvUEk1/86SKCEkHLvyDi9IGD+aQSZ6JmGsCsDi6Cd6QkLbJSXDixI0CW7LEmuHxeIG7O8+gTt3AcobgPhUgqwwsDKsJca8RSVwzWiyhOdEdsgWv8DN5R9wefEDkNKETN2EhhZiJDIxlSKBOjzdQgHeJjgU5iyGzBR6SvTBHZV4Td4l3qTEt00lHgBjlGG7Su2augAAAABJRU5ErkJggg==">
+		</p>
+	</div>
+
+<script type="text/javascript">
+
+	/**
+	 *	The options presented here are for the most part optional
+	*/
+
+	var CHANGES = document.getElementById('CHANGES'),
+		CHANGEL = document.getElementById('CHANGEL'),
+		SHOWCOLOR = document.getElementById('SHOWCOLOR'),
+		CLICKRING = document.getElementById('CLICKRING'),
+		CSPC = document.getElementById('CSPC'),
+		spot = document.getElementById('spot'),
+		info = document.getElementById('info'),
+
+		hw = new HueWheel('huewheel', {
+			onChange:				update,
+			saturation:				1.0,
+			lightness:				0.5,
+			colorSpace:				'hsl',
+
+			diameter:				300,
+			shadowBlur:				7,
+			changeSaturation:		true,
+			changeLightness:		true,
+			showColor:				true,
+			colorSpotWidth:			0.7,
+			colorSpotBorder:		1,
+			colorSpotBorderColor:	'#333',
+			quality:				2,
+
+			hueKnobSize:			0.14,
+			hueKnobColor:			'#ffc',
+			lightKnobColor:			'#ff0',
+			hueKnobColorSelected:	'#fff',
+			hueKnobShadow:			true,
+			lightnessKnobColorSelected:	'#f00',
+			lightnessRingClickable:	false,
+
+			useKeys:				true,
+			hueKeyDelta:			2,
+			saturationKeyDelta:		1,
+			lightnessKeyDelta:		1,
+			shiftKeyFactor:			10
+		});
+
+	function update(e) {
+
+		info.innerHTML = 'H: ' + e.h.toFixed(0) + ' S:' + e.s.toFixed(2) + ' L:' + e.l.toFixed(2) +
+						 ' R:' + e.r + ' G:' + e.g + ' B:' + e.b;
+
+		spot.style.backgroundColor = 'rgb(' + e.r + ',' + e.g + ',' + e.b + ')';
+	}
+
+	CHANGES.onchange = function() {
+		hw.changeSaturation(CHANGES.checked);
+	};
+
+	CHANGEL.onchange = function() {
+		hw.changeLightness(CHANGEL.checked);
+		CLICKRING.disabled = !CHANGEL.checked;
+	};
+
+	SHOWCOLOR.onchange = function() {
+		hw.showColor(SHOWCOLOR.checked);
+	};
+
+	CLICKRING.onchange = function() {
+		hw.lightnessClickable(CLICKRING.checked);
+	};
+
+	CSPC.onchange = function() {
+		hw.colorSpace(CSPC.value);
+	};
+
+</script>
+</body>
+</html>
