@@ -1,7 +1,7 @@
 Hue Wheel for JavaScript
 ========================
 
-![Demo snapshot](http://i.imgur.com/by5YtY3.png)  
+![Demo snapshot](http://i.imgur.com/by5YtY3.png)
 *<sup>Snapshot from tint demo.</sup>*
 
 HueWheel is a HSL/HSV HTML5 color wheel *control*. Supports HSL/HSV <-> RGB values with many options for
@@ -15,17 +15,6 @@ appearance and functionality. The control can be controlled with both mouse and 
 - Supports mouse and touch/pen
 - Supports keys for accesibility (when control is active)
 - Highly configurable (visible controls, sizes, start values, converted RGB <-> HSL/HSV, colors and more)
-
-Live demo
-=========
-
-See this page for live demo:  
-
-[http://epistemex.github.io/HueWheel/demo_tint.html](http://epistemex.github.io/HueWheel/demo_tint.html)
-
-or see this video showing the wheel in action:
-
-[YouTube video demo](https://www.youtube.com/watch?v=aVAECw-6tL0)
 
 
 Examples
