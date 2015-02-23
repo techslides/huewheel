@@ -292,6 +292,6 @@ License
 
 Released under [MIT license](http://choosealicense.com/licenses/mit/). You can use this class in both commercial and non-commercial projects provided that full header (minified and developer versions) is included.
 
-*&copy; 2013-2014 Epistemex*
+*&copy; 2013-2015 Epistemex*
 
 ![Epistemex](http://i.imgur.com/YxO8CtB.png)
