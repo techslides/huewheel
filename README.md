@@ -16,6 +16,13 @@ appearance and functionality. The control can be controlled with both mouse and 
 - Supports keys for accesibility (when control is active)
 - Highly configurable (visible controls, sizes, start values, converted RGB <-> HSL/HSV, colors and more)
 
+Live demo
+=========
+
+See this page for live demo:
+
+[http://epistemex.github.io/HueWheel/demo_tint.html](http://epistemex.github.io/HueWheel/demo_tint.html)
+
 
 Examples
 ========
