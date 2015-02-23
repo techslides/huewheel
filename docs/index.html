@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>HueWheel Index</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.dark.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="navbar navbar-fixed-top ">
+		<div class="navbar-inner">
+			<a class="brand" href="index.html">HueWheel</a>
+			<ul class="nav">
+				
+				<li class="dropdown">
+					<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="HueWheel.html">HueWheel</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="events.list.html" class="dropdown-toggle" data-toggle="dropdown">Events<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="HueWheel.html#event:mouseEvent">HueWheel#event:mouseEvent</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+
+		
+		<div class="span8">
+			
+				<div id="main">
+					
+
+
+	
+	<span class="page-title">Index</span>
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+    <section class="readme-section">
+        <article><h1>Hue Wheel for JavaScript</h1><p><img src="http://i.imgur.com/by5YtY3.png" alt="Demo snapshot">
+<em><sup>Snapshot from tint demo.</sup></em></p>
+<p>HueWheel is a HSL/HSV HTML5 color wheel <em>control</em>. Supports HSL/HSV &lt;-&gt; RGB values with many options for
+appearance and functionality. The control can be controlled with both mouse and touch/pen.</p>
+<p><strong>FEATURES:</strong></p>
+<ul>
+<li>Rotating knobs changing values in real-time.</li>
+<li>HSL/HSV color space with built-in color-space convertion between RGB, HSL and HSV.</li>
+<li>Hue, Saturation, Lightness/Brightness (depending on chosen color-space mode) can be controlled individually with controls or programatically.</li>
+<li>Supports mouse and touch/pen</li>
+<li>Supports keys for accesibility (when control is active)</li>
+<li>Highly configurable (visible controls, sizes, start values, converted RGB &lt;-&gt; HSL/HSV, colors and more)</li>
+</ul>
+<h1>Live demo</h1><p>See this page for live demo:</p>
+<p><a href="http://epistemex.github.io/huewheel/">http://epistemex.github.io/huewheel/</a></p>
+<h1>Examples</h1><h2>All visible features activated</h2><p><img src="http://i.imgur.com/ealXjHB.png" alt="All controls activated" /></p>
+<h2>Color spot disabled</h2><p>You will still receive color value as RGB, HSL/HSV in the onchange event. This is useful
+if you want to present the current color in a custom way.</p>
+<p><img src="http://i.imgur.com/eN3jmIP.png" alt="Color spot disabled" /></p>
+<h2>Lightness wheel disabled</h2><p>Lightness can still be changed programatically but is not visible in the control. Useful when you only want to
+tint an image using the luminance from the image as input instead.</p>
+<p><img src="http://imgur.com/YhXn6RT.png" alt="Lightness wheel disabled" /></p>
+<h2>Saturation slider disabled</h2><p>Saturation can still be changed programatically but is not visible in the control.</p>
+<p><img src="http://i.imgur.com/71NFm2X.png" alt="Saturation slider disabled" /></p>
+<p><strong>USAGE:</strong></p>
+<pre class="prettyprint source"><code>var hw = new hueWheel(element|id, options);
+
+element | id
+    The element or id (as string) to turn into a HUE wheel.</code></pre><p><strong>OPTIONS:</strong></p>
+<pre class="prettyprint source"><code>diameter (integer)
+    diameter of control
+
+shadowBlur (float)
+    size of shadow (0 = off)
+
+shadowColor (string)
+    Color of shadow if used.
+
+hue (float)
+    Initial hue value [0, 360]
+
+saturation (float)
+    Initial saturation value [0.0, 1.0]. Default 1.0.
+
+lightness (float)
+    Initial lightness value [0.0, 1.0]. Default 0.5 with HSL, 1.0 with HSV.
+
+rgb (array)
+    Inital rgb value (overrides hue, saturation and lightness)
+
+changeSaturation (bool)
+    Enable control to change saturation. Default false.
+
+changeLightness (bool)
+    Enable control to change lightness. Default false.
+
+colorSpace (string)
+    Can be either 'hsl' or 'hsv'. Default is 'hsl'.
+
+showColorSpot (bool)
+    Show current color in the center. Default false.
+
+onChange (function)
+    Function to call on each update.
+
+colorSpotWidth (float)
+    If showColor is used this is the ratio of the radius from center to the edge of
+    hue wheel. Value can be [0.0, 1.0], default 0.7 (70%).
+
+colorSpotBorder
+    If showColor is used this is the width of the border. A close to 0 turns the
+    border off.
+
+colorSpotBorderColor
+    If showColor and colorBorder > 0 this will be the color of the border.
+    Default is black.
+
+thicknessHue (integer)
+    Thickness of hue ring in pixels
+
+thicknessLightness (integer)
+    Thickness of lightness ring in pixels.
+
+quality (integer)
+    Quality or resolution of gradients. Higher is better. Default is 2.
+    Note: must be in steps of 2^q (ie., 1, 2, 4). The higher quality
+    the longer time it takes to render &quot;static&quot; changes.
+
+hueKnobSize (float) v.0.2
+    A value [0.0, 1.0] determining the size of the hue knob relative to radius.
+    Default: 0.1 (10%)
+
+hueKnobColor (string) v.0.2
+    Color for hue knob (default is white).
+
+lightnessKnobColor (string) v.0.2
+    Color for lightness knob (default is white).
+
+hueKnobColorSelected (string) v.0.2
+    Color for hue knob when selected (default is #777).
+
+lightnessKnobColorSelected (string) v.0.2
+    Color for lightness knob when selected (default is #777).
+
+lightnessRingClickable (boolean) v.0.2
+    Makes lightness ring clickable (outside knob, inside ring).
+
+hueKnobShadow (boolean) v.0.3
+    Use shadow with hue knob if shadow is activated.
+
+useKeys (boolean) v.0.3
+    Enable usage of keys to control hsl when control is active. Default: true.
+
+hueKeyDelta (number) v.0.3
+    Delta values to increment/decrement the hue value with when its hotkey is pressed.
+    Default: 1
+
+saturationKeyDelta (number) v.0.3
+    Delta values to increment/decrement the saturation value with when its hotkey is pressed.
+    Default: 1
+
+lightnessKeyDelta (number) v.0.3
+    Delta values to increment/decrement the lightness value with when its hotkey is pressed.
+    Default: 1
+
+keyShiftFactor (number) v.0.3
+    When the shift key is held down the delta values are multiplied with this factor when
+    using the hotkeys.
+    Default: 10
+
+hueKeyCodeUp / ..Down (number) v.0.3
+    Key code to use to alter hue value.
+    Default: Page Up / Page Down
+
+saturationKeyCodeUp / ..Down (number) v.0.3
+    Key code to use to alter saturation value.
+    Default: Left / Right arrow keys
+
+lightnessKeyCodeUp / ..Down (number) v.0.3
+    Key code to use to alter lightness value.
+    Default: Up / Down arrow keys
+
+tabable (boolean) v.1.0
+    Make control tab-able to access fully with keys.
+    Default: true</code></pre><p><strong>METHODS:</strong></p>
+<p>Methods can be chained in set mode.</p>
+<pre class="prettyprint source"><code>showColor([bool])
+
+    Get status or toggle color spot on or off.
+
+changeSaturation([bool])
+
+    Get status or enable/disable visual adjustment of saturation.
+
+changeLightness([bool])
+
+    Get status or enable/disable visual adjustment of lightness / brightness.
+
+hsl([h, s, l])
+
+    Get or set HSL value (updates control). If in HSV mode values are
+    automatically converted.
+
+hsv([h, s, v])
+
+    Get or set HSV value (updates control). If in HSL mode values are
+    automatically converted.
+
+rgb([r, g, b])
+
+    Get or set RGB value (updates control).
+
+thicknessHue([value])
+
+    Get or set thickness of HUE wheel and updates control.
+
+thicknessLightness([value])
+
+    Get or set thickness of Lightness/Brightness wheel and updates control.
+
+colorSpotRadius([value])
+
+    Gets or sets the radius factor of the color spot and updates if
+    color spot is visible.
+
+colorSpace([string])
+
+    Get or set color space. Possible values are 'hsl' and 'hsv'.
+
+lightnessClickable([bool])
+
+    Get or set clickable status of the lightness ring outside the knob.</code></pre><p><strong>FUNCTIONS:</strong></p>
+<p>Available on the instance -</p>
+<pre class="prettyprint source"><code>rgb2hsl(r, g, b) -> hsl object with properties h, s, l
+rgb2hsv(r, g, b) -> hsv object with properties h, s, v
+hsl2rgb(h, s, l) -> rgb object with properties r, g, b
+hsv2rgb(h, s, v) -> rgb object with properties r, g, b</code></pre><p><strong>EVENTS:</strong></p>
+<pre class="prettyprint source"><code>hueWheelObject.onchange = function(event) { ... }</code></pre><p>Can also be set via options using the onChange property.</p>
+<p>Event object properties:</p>
+<pre class="prettyprint source"><code>h = current hue [0, 360]
+s = current saturation [0.0, 0.1]
+l = (if HSL mode) current lightness [0.0, 0.1]
+v = (if HSV mode) current brightness [0.0, 0.1]
+r = current red [0, 255]
+g = current green [0, 255]
+b = current blue [0, 255]
+x = current x position in wheel
+y = current y position in wheel
+isTouch = event was triggered using touch and not mouse/pen</code></pre><h2>Note on Internet Explorer</h2><p>For touch-enabled devices using internet explorer -</p>
+<p>To make MSPointerMove event work properly you need to redirect all pointer events using CSS:</p>
+<pre class="prettyprint source"><code>html {
+    -ms-touch-action: none;
+    }</code></pre><p>This will allow the hue wheel to work with IE 10/11 and touch. As it's prefixed it
+won't affect other browsers. See included demos for example.</p>
+<p>Also, if you get selected text and don't want this you can use:</p>
+<pre class="prettyprint source"><code>element.addEventListener('selectstart', function(e) { e.preventDefault(); }, false);</code></pre><p><a href="http://msdn.microsoft.com/en-us/library/ie/hh673557%28v=vs.85%29.aspx">Read more here</a></p>
+<h2>License</h2><p>Released under <a href="http://choosealicense.com/licenses/mit/">MIT license</a>. You can use this class in both commercial and non-commercial projects provided that full header (minified and developer versions) is included.</p>
+<p><em>&copy; 2013-2015 Epistemex</em></p>
+<p><img src="http://i.imgur.com/YxO8CtB.png" alt="Epistemex"></p></article>
+    </section>
+
+
+
+
+
+
+
+				</div>
+
+				<div class="clearfix"></div>
+				<footer>
+					
+					<p><b><a href='https://github.com/epistemex/'>Epistemex at GitHib</a></b></p>
+					<br />
+					
+					
+		<span class="copyright">
+		Copyright &copy; 2013-2015 Epistemex
+		</span>
+					<br />
+					
+		<span class="jsdoc-message">
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha10</a>
+		on Mon Feb 23rd 2015 using the <a
+			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		</span>
+				</footer>
+			</div>
+
+			
+			<div class="span3">
+				<div id="toc"></div>
+			</div>
+			
+			<br clear="both">
+		</div>
+
+	</div>
+	<!--<script src="scripts/sunlight.js"></script>-->
+	<script src="scripts/docstrap.lib.js"></script>
+	<script src="scripts/bootstrap-dropdown.js"></script>
+	<script src="scripts/toc.js"></script>
+
+	<script>
+		$( function () {
+			$( "[id*='$']" ).each( function () {
+				var $this = $( this );
+
+				$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+			} );
+
+			$( "#toc" ).toc( {
+				anchorName  : function ( i, heading, prefix ) {
+					return $( heading ).attr( "id" ) || ( prefix + i );
+				},
+				selectors   : "h1,h2,h3,h4",
+				showAndHide : false,
+				scrollTo    : "100px"
+			} );
+
+			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+			$( '.dropdown-toggle' ).dropdown();
+//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+				var $this = $( this );
+
+				var example = $this.find( "code" );
+				exampleText = example.html();
+				var lang = /{@lang (.*?)}/.exec( exampleText );
+				if ( lang && lang[1] ) {
+					exampleText = exampleText.replace( lang[0], "" );
+					example.html( exampleText );
+					lang = lang[1];
+				} else {
+					lang = "javascript";
+				}
+
+				if ( lang ) {
+
+					$this
+						.addClass( "sunlight-highlight-" + lang )
+						.addClass( "linenums" )
+						.html( example.html() );
+
+				}
+			} );
+
+			Sunlight.highlightAll( {
+				lineNumbers : false,
+				showMenu : true,
+				enableDoclinks : true
+			} );
+		} );
+	 </script>
+
+
+
+	<!--Navigation and Symbol Display-->
+	
+
+
+	<!--Google Analytics-->
+	
+
+</body>
+</html>
