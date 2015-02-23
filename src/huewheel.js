@@ -1,100 +1,14 @@
 /*!
- *	Hue Wheel 1.1
+ *	Hue Wheel 1.1.1
  *
- *	(c) 2013-2014 Epistemex
+ *	(c) 2013-2015 Epistemex
  *	www.epistemex.com
  *
  *	License: MIT
 */
 
 /**
- * Event object for hueWheel onChange event
- *
- * @event hueWheel#mouseEvent
- * @type {Object}
- * @prop {Number} h - current hue [0, 360]
- * @prop {Number} s - current hue [0.0, 0.1]
- * @prop {Number} l - current lightness (HSL mode) [0.0, 0.1]
- * @prop {Number} v - current lightness (HSV mode) [0.0, 0.1]
- * @prop {Number} r - current red value [0, 255]
- * @prop {Number} g - current green value [0, 255]
- * @prop {Number} b - current blue value [0, 255]
- * @prop {Number} x - current x position in wheel (relative)
- * @prop {Number} y - current y position in wheel (relative)
- * @prop {Boolean} isTouch - Event was triggered by touch and not mouse
- */
-
-/**
  * Create a new instance of a Hue wheel.
- *
- *	METHODS:
- *
- *	All methods returns current value if no argument is given except with methods
- *	that are expected to return a value in any case.
- *
- *		showColor([bool])
- *
- *			Get status or toggle color spot on or off.
- *
- *		changeSaturation([bool])
- *
- *			Get status or enable/disable visual adjustment of saturation.
- *
- *		changeLightness([bool])
- *
- *			Get status or enable/disable visual adjustment of lightness / brightness.
- *
- *		hsl([h, s, l])
- *
- *			Get or set HSL value (updates control). If in HSV mode values are
- *			automatically converted.
- *
- *		hsv([h, s, v])
- *
- *			Get or set HSV value (updates control). If in HSL mode values are
- *			automatically converted.
- *
- *		rgb([r, g, b])
- *
- *			Get or set RGB value (updates control).
- *
- *		thicknessHue([value])
- *
- *			Get or set thickness of HUE wheel and updates control.
- *
- *		thicknessLightness([value])
- *
- *			Get or set thickness of Lightness/Brightness wheel and updates control.
- *
- *		colorSpotRadius([value])
- *
- *			Gets or sets the radius factor of the color spot and updates if
- *			color spot is visible.
- *
- *		colorSpace([string])
- *
- *			Get or set color space. Possible values are 'hsl' and 'hsv'.
- *
- *		lightnessClickable([bool])
- *
- *			Get or set clickable status of the lightness ring outside the knob.
- *
- *	Methods can be chained in set mode.
- *
- *
- *	EVENTS
- *
- *		onChange -> function(event) properties:
- *
- *			h = current hue [0, 360]
- *			s = current saturation [0.0, 0.1]
- *			l = (if HSL mode) current lightness [0.0, 0.1]
- *			v = (if HSV mode) current brightness [0.0, 0.1]
- *			r = current red [0, 255]
- *			g = current green [0, 255]
- *			b = current blue [0, 255]
- *			x = current x position in wheel
- *			y = current y position in wheel
  *
  * @param {String|HTMLElement} elementID - ID of an element or the element itself to turn into a control
  * @param {Object} [options] Options given as JSON
@@ -1476,4 +1390,19 @@ function HueWheel(elementID, options) {
 	return this;
 }
 
-var hueWheel = HueWheel;	// transitional, please use HueWheel as instance
+/**
+ * Event object for HueWheel (onchange)
+ *
+ * @event HueWheel#mouseEvent
+ * @type {Object}
+ * @prop {Number} h - current hue [0, 360>
+ * @prop {Number} s - current saturation [0.0, 1.0]
+ * @prop {Number} l - (if HSL mode) current lightness [0.0, 0.1]
+ * @prop {Number} v - (if HSV mode) current brightness [0.0, 0.1]
+ * @prop {Number} r - current red [0, 255]
+ * @prop {Number} g - current green [0, 255]
+ * @prop {Number} b - current blue [0, 255]
+ * @prop {Number} x - current x position in wheel
+ * @prop {Number} y - current y position in wheel
+ * @prop {Boolean} isTouch - Event was triggered by touch and not mouse
+ */

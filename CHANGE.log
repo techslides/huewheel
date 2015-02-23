@@ -1,6 +1,11 @@
 CHANGE LOG
 ==========
 
+1.1.1
+
+CHG: hueWheel is no obsolete. Use HueWheel instead to create new instances
+
+
 1.1
 
 CHG: Instance object name changed from "hueWheel" to "HueWheel" to follow common convention (hueWheel is still available for now but please update your code)
