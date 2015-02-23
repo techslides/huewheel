@@ -21,7 +21,7 @@ Live demo
 
 See this page for live demo:
 
-[http://epistemex.github.io/HueWheel/](http://epistemex.github.io/HueWheel/)
+[http://epistemex.github.io/huewheel/](http://epistemex.github.io/huewheel/)
 
 
 Examples
