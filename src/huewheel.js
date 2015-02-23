@@ -1,5 +1,5 @@
 /*!
- *	Hue Wheel 1.1.1
+ *	Hue Wheel 1.1.2
  *
  *	(c) 2013-2015 Epistemex
  *	www.epistemex.com
@@ -1084,12 +1084,12 @@ function HueWheel(elementID, options) {
 	 */
 	this.hsl = function(h, s, l) {
 
-		if (arguments.length === 0) {
+		if (!arguments.length) {
 
 			if (isHSL) {
 				return {h: angle, s: saturation, l: lightness};
-
-			} else {
+			}
+			else {
 
 				var rgb = hsv2rgb(angle, saturation, lightness),
 					hsl = rgb2hsl(rgb.r, rgb.g, rgb.b);
@@ -1117,13 +1117,13 @@ function HueWheel(elementID, options) {
 
 		var rgb, hsv, hsl;
 
-		if (arguments.length === 0) {
+		if (!arguments.length) {
 			if (isHSL) {
 				rgb = hsl2rgb(angle, saturation, lightness);
 				hsv = rgb2hsv(rgb.r, rgb.g, rgb.b);
 				return {h: hsv.h, s: hsv.s, v: hsv.v};
-
-			} else {
+			}
+			else {
 				return {h: angle, s: saturation, v: lightness};
 			}
 		}
@@ -1159,7 +1159,7 @@ function HueWheel(elementID, options) {
 	 */
 	this.rgb = function(r, g, b) {
 
-		if (arguments.length === 0)
+		if (!arguments.length)
 			return {h: angle, s: saturation, l: lightness, v: lightness};
 
 		var rgb = validateRGB(r, g, b);
@@ -1202,7 +1202,7 @@ function HueWheel(elementID, options) {
 	 */
 	this.showColor = function(state) {
 
-		if (arguments.length === 0 || !isBool(state))
+		if (!arguments.length || !isBool(state))
 			return showColor;
 
 		showColor = state;
@@ -1221,7 +1221,7 @@ function HueWheel(elementID, options) {
 	 */
 	this.changeLightness = function(state) {
 
-		if (arguments.length === 0 || !isBool(state))
+		if (!arguments.length || !isBool(state))
 			return useLuma;
 
 		useLuma = state;
@@ -1243,7 +1243,7 @@ function HueWheel(elementID, options) {
 	 */
 	this.changeSaturation = function(state) {
 
-		if (arguments.length === 0 || !isBool(state))
+		if (!arguments.length || !isBool(state))
 			return useSat;
 
 		useSat = state;
@@ -1263,7 +1263,7 @@ function HueWheel(elementID, options) {
 	 */
 	this.thicknessHue = function(t) {
 
-		if (arguments.length === 0 || !isNum(t))
+		if (!arguments.length || !isNum(t))
 			return thickness;
 
 		if (t < 3) t = 3;
@@ -1286,7 +1286,7 @@ function HueWheel(elementID, options) {
 	 */
 	this.thicknessLightness = function(t) {
 
-		if (arguments.length === 0 || !isNum(t))
+		if (!arguments.length || !isNum(t))
 			return thickness;
 
 		if (t < 3) t = 3;
@@ -1309,7 +1309,7 @@ function HueWheel(elementID, options) {
 	 */
 	this.colorSpotRadius = function(radiusFactor) {
 
-		if (arguments.length === 0 || !isNum(radiusFactor))
+		if (!arguments.length || !isNum(radiusFactor))
 			return colorWidth;
 
 		colorWidth = radiusFactor;
@@ -1328,7 +1328,7 @@ function HueWheel(elementID, options) {
 	 */
 	this.colorSpace = function(spc) {
 
-		if (arguments.length === 0 || (spc !== 'hsl' && spc !== 'hsv'))
+		if (!arguments.length || (spc !== 'hsl' && spc !== 'hsv'))
 			return isHSL ? 'hsl' : 'hsv';
 
 		var rgb, c;
@@ -1371,7 +1371,7 @@ function HueWheel(elementID, options) {
 	 */
 	this.lightnessClickable = function(state) {
 
-		if (arguments.length === 0 || !isBool(state))
+		if (!arguments.length || !isBool(state))
 			return lightClickable;
 
 		lightClickable = state;
@@ -1382,12 +1382,46 @@ function HueWheel(elementID, options) {
 	/*
 	 *	Convertion public vectors
 	*/
-	this.rgb2hsl = rgb2hsl;
-	this.rgb2hsv = rgb2hsv;
-	this.hsv2rgb = hsv2rgb;
-	this.hsl2rgb = hsl2rgb;
 
-	return this;
+	/**
+	 * Convert RGB to HSL
+	 * @method
+	 * @param {number} r - red component [0, 255]
+	 * @param {number} g - green component [0, 255]
+	 * @param {number} b - blue component [0, 255]
+	 * @returns {object} Object with properties h, s, l
+	 */
+	this.rgb2hsl = rgb2hsl;
+
+	/**
+	 * Convert RGB to HSL
+	 * @method
+	 * @param {number} r - red component [0, 255]
+	 * @param {number} g - green component [0, 255]
+	 * @param {number} b - blue component [0, 255]
+	 * @returns {object} Object with properties h, s, v
+	 */
+	this.rgb2hsv = rgb2hsv;
+
+	/**
+	 * Convert HSV to RGB
+	 * @method
+	 * @param {number} h - hue [0, 360>
+	 * @param {number} s - saturation [0.0, 1.0]
+	 * @param {number} v - brightness [0.0, 1.0]
+	 * @returns {object} Object with properties r, g, b
+	 */
+	this.hsv2rgb = hsv2rgb;
+
+	/**
+	 * Convert HSL to RGB
+	 * @method
+	 * @param {number} h - hue [0, 360>
+	 * @param {number} s - saturation [0.0, 1.0]
+	 * @param {number} l - lightness [0.0, 1.0]
+	 * @returns {object} Object with properties r, g, b
+	 */
+	this.hsl2rgb = hsl2rgb;
 }
 
 /**

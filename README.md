@@ -286,6 +286,11 @@ Also, if you get selected text and don't want this you can use:
 
 [Read more here](http://msdn.microsoft.com/en-us/library/ie/hh673557%28v=vs.85%29.aspx)
 
+See also
+--------
+
+- [FastHSL2RGB](https://github.com/epistemex/FastHSL2RGB)
+
 
 License
 -------
